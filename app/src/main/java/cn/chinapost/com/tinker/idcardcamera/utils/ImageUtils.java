@@ -3,9 +3,12 @@ package cn.chinapost.com.tinker.idcardcamera.utils;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.ImageFormat;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
+import android.graphics.drawable.Drawable;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -117,5 +120,28 @@ public class ImageUtils {
         byte[] tmp = os.toByteArray();
         Bitmap bmp = BitmapFactory.decodeByteArray(tmp, 0, tmp.length);
         return bmp;
+    }
+
+
+    public static Bitmap drawableToBitmap(Drawable drawable){
+        Bitmap bitmap = Bitmap.createBitmap(
+
+                drawable.getIntrinsicWidth(),
+
+                drawable.getIntrinsicHeight(),
+
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+
+                        : Bitmap.Config.RGB_565);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        //canvas.setBitmap(bitmap);
+
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        drawable.draw(canvas);
+
+        return bitmap;
     }
 }

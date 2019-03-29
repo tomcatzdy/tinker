@@ -1,9 +1,17 @@
 package cn.chinapost.com.tinker;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -12,6 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.chinapost.com.tinker.broadcast.ThinkPadBroadcastReceiver;
 import cn.chinapost.com.tinker.customtinker.TinkerManager;
 import cn.chinapost.com.tinker.imageloader.ImageLoaderManager;
 import cn.chinapost.com.tinker.zxing.app.CaptureActivity;
@@ -27,11 +36,18 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> mUrls;
     private EditText et;
     private String []  photos = new String[10];
+
+    private static final String HELLO_ACTION = "hello_action";
+    private ThinkPadBroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         et = findViewById(R.id.edit_text);
+        IntentFilter intentFilter = new IntentFilter(HELLO_ACTION);
+        broadcastReceiver = new ThinkPadBroadcastReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,intentFilter);
 
         ///storage/emulated/0/Android/data/cn.chinapost.com.tinker/cache/tpatch/
         mPatchDir =  getExternalCacheDir().getAbsolutePath()+"/tpatch/";
@@ -109,4 +125,60 @@ public class MainActivity extends AppCompatActivity {
     public void take_photo(View view) {
         startActivityForResult(new Intent(this,TakePhotoActivity.class),0x11);
     }
+
+    /**
+     * 发送广播
+     * @param view
+     */
+    public void sendBroadcast(View view) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(HELLO_ACTION));
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+    }
+
+    public void jumpViewPager(View view) {
+        startActivity(new Intent(this,FragmentViewPagerActivity.class));
+    }
+
+    /**
+     * 属性动画
+     * @param view
+     */
+    public void animation(View view) {
+        /*ValueAnimator animator = (ValueAnimator) AnimatorInflater.loadAnimator(getApplicationContext(),R.animator.text_animation);
+        ValueAnimator.AnimatorUpdateListener listener = new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                Float animatedValue = (Float) valueAnimator.getAnimatedValue();
+                imageView.setAlpha(animatedValue);
+
+            }
+        };
+
+        animator.setDuration(1000);
+        animator.addUpdateListener(listener);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.start();*/
+
+        AnimatorSet set = new AnimatorSet();
+
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(imageView,"alpha",1.0f,0.0f,1.0f);
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(imageView,"rotation",0,180,0);
+        ObjectAnimator animator3 = ObjectAnimator.ofFloat(imageView,"rotationY",0,180,0);
+        ObjectAnimator animator4 = ObjectAnimator.ofFloat(imageView,"translationX",0,180,0);
+        ObjectAnimator animator5 = ObjectAnimator.ofFloat(imageView,"scaleX",1.0f,2.0f,0.5f);
+       /* animator1.setDuration(2000);
+        animator1.start();*/
+       //set.play(animator2).after(animator1);
+        set.playTogether(animator1,animator2,animator3,animator4,animator5);
+       set.setDuration(5000);
+       set.start();
+
+    }
+
 }

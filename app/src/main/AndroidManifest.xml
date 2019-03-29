@@ -40,7 +40,8 @@
             android:name=".idcardcamera.camera.CameraActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
-        <activity android:name=".PhotoViewActivity"></activity>
+        <activity android:name=".PhotoViewActivity" />
+        <activity android:name=".FragmentViewPagerActivity"></activity>
     </application>
 
 </manifest>
