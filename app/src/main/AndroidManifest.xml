@@ -41,7 +41,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
         <activity android:name=".PhotoViewActivity" />
-        <activity android:name=".FragmentViewPagerActivity"></activity>
+        <activity android:name=".FragmentViewPagerActivity" />
+        <activity android:name=".GitTextActivity"></activity>
     </application>
 
 </manifest>
