@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context="cn.chinapost.com.tinker.GitTextActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/splash_image_view"
+            android:focusable="true"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_logo"
+            android:layout_width="72dp"
+            android:layout_height="72dp" />
+
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/color_ffff4444"
+            android:gravity="center_horizontal"
+            android:text="@string/splash_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</RelativeLayout>

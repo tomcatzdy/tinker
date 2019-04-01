@@ -181,4 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void vector(View view) {
+        startActivity(new Intent(this,GitTextActivity.class));
+    }
 }

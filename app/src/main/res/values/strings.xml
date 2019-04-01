@@ -67,6 +67,7 @@
     <string name="input_comment">请输入留言</string>
     <string name="comment_hint_head">回复@</string>
     <string name="comment_hint_footer">:</string>
+    <string name="splash_text">滴滴开启每一天的美好</string>
 
     <!-- QR_Code -->
     <string name="button_ok">OK</string>
